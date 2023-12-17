@@ -2,7 +2,7 @@
 
 namespace CompanyTestProject.Application.Repositories
 {
-    public interface UserProductRepository : IGenericRepository<UserProduct>
+    public interface IUserProductRepository : IGenericRepository<UserProduct>
     {
     }
 }

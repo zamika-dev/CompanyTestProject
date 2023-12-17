@@ -9,7 +9,9 @@ namespace CompanyTestProject.Application.Profiles
     {
         public MappingProfile() 
         {
-            CreateMap<Product, ProductDto>().ReverseMap();
+            CreateMap<Product, ProductDtoResponse>().ReverseMap();
+            CreateMap<Product, CreateProductRequestDto>().ReverseMap();
+            CreateMap<Product, UpdateProductRequestDto>().ReverseMap();
             CreateMap<UserProduct, UserProductDto>().ReverseMap();
         }
     }

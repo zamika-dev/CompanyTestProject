@@ -2,7 +2,7 @@
 
 namespace CompanyTestProject.Application.DTOs.Product
 {
-    public class ProductDto : BaseDto
+    public class ProductDto
     {
         public required string Name { get; set; }
 
