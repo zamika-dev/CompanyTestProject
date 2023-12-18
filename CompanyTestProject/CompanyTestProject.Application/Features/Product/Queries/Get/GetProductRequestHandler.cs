@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CompanyTestProject.Application.Features.Product.Queries.Get
 {
-    public class GetProductRequestHandler : IRequestHandler<GetProductRequest, ProductDtoResponse>
+    public class GetProductRequestHandler : IRequestHandler<GetProductRequest, ProductResponseDto>
     {
         private readonly IProductRepository _ProductRepository;
         private readonly IMapper _Mapper;
@@ -16,13 +16,13 @@ namespace CompanyTestProject.Application.Features.Product.Queries.Get
             _Mapper = mapper;
         }
 
-        public async Task<ProductDtoResponse> Handle(GetProductRequest request, CancellationToken cancellationToken)
+        public async Task<ProductResponseDto> Handle(GetProductRequest request, CancellationToken cancellationToken)
         {
             var product = await _ProductRepository.GetById(request.Id);
             if (product == null)
                 throw new Exception("Product does not exist");
 
-            return _Mapper.Map<ProductDtoResponse>(product);
+            return _Mapper.Map<ProductResponseDto>(product);
         }
     }
 }

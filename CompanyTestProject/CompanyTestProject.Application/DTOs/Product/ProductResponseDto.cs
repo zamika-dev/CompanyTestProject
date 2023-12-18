@@ -1,6 +1,6 @@
 ﻿namespace CompanyTestProject.Application.DTOs.Product
 {
-    public class ProductDtoResponse : BaseDto
+    public class ProductResponseDto : BaseDto
     {
         public ProductDto ProductDto { get; set; }
     }
