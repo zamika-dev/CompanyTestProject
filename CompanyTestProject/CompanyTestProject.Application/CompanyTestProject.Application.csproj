@@ -16,9 +16,4 @@
     <ProjectReference Include="..\CompanyTestProject.Domain\CompanyTestProject.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Features\Product\Commands\Delete\" />
-    <Folder Include="Features\Product\Commands\Update\" />
-  </ItemGroup>
-
 </Project>

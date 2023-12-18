@@ -1,24 +1,24 @@
 ﻿using AutoMapper;
-using CompanyTestProject.Application.DTOs.Product;
 using CompanyTestProject.Application.Repositories;
 using CompanyTestProject.Application.Validator;
 using MediatR;
 
-namespace CompanyTestProject.Application.Features.Product.Commands.Create
+namespace CompanyTestProject.Application.Features.Product.Commands.Update
 {
-    public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, int>
+    public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand, Unit>
     {
         private readonly IProductRepository _ProductRepository;
         private readonly IMapper _Mapper;
 
-        public CreateProductCommandHandler(IProductRepository productRepository, IMapper mapper)
+        public UpdateProductCommandHandler(IProductRepository productRepository, IMapper mapper)
         {
             _ProductRepository = productRepository;
             _Mapper = mapper;
         }
-        public async Task<int> Handle(CreateProductCommand request, CancellationToken cancellationToken)
+
+        public async Task<Unit> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
         {
-            var validator = new CreateProductDtoValidator(_ProductRepository);
+            var validator = new UpdateProductDtoValidator(_ProductRepository);
             var validationResult = await validator.ValidateAsync(request.ProductRequestDto);
             if (!validationResult.IsValid)
             {
@@ -29,11 +29,14 @@ namespace CompanyTestProject.Application.Features.Product.Commands.Create
                 throw new Exception(errorMessageList);
             }
 
-            var product = _Mapper.Map<Domain.Product>(request.ProductRequestDto);            product = await _ProductRepository.Add(product);
+            var product = await _ProductRepository.GetById(request.ProductRequestDto.Id);
             if (product == null)
-                throw new Exception("Product wasn't Created");
+                throw new Exception("Product Not exist");
 
-            return product.Id;
+            _Mapper.Map(request.ProductRequestDto, product);
+            await _ProductRepository.Update(product);
+
+            return Unit.Value;
         }
     }
 }
