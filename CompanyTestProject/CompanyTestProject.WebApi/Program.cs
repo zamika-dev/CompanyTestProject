@@ -1,5 +1,6 @@
 using CompanyTestProject.Application;
 using CompanyTestProject.Infrustructure;
+using CompanyTestProject.WebApi;
 using Microsoft.Net.Http.Headers;
 using Microsoft.OpenApi.Models;
 
@@ -29,6 +30,7 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
+app.MigrateDatabase();
 app.UseSwagger();
 app.UseSwaggerUI();
 app.UseAuthentication();
