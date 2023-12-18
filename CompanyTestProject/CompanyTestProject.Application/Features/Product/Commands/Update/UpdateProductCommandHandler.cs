@@ -33,7 +33,11 @@ namespace CompanyTestProject.Application.Features.Product.Commands.Update
             if (product == null)
                 throw new Exception("Product Not exist");
 
-            _Mapper.Map(request.ProductRequestDto, product);
+            var userProducts = await _ProductRepository.GetByUserId(request.UserId);
+            if (!userProducts.Exists(x => x.Id == product.Id))
+                throw new Exception("You don't have permission to edit this product");
+
+            _Mapper.Map(request.ProductRequestDto.ProductDto, product);
             await _ProductRepository.Update(product);
 
             return Unit.Value;

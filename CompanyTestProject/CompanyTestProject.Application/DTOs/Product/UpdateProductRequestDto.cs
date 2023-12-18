@@ -1,7 +1,9 @@
-﻿namespace CompanyTestProject.Application.DTOs.Product
+﻿using CompanyTestProject.Application.DTOs;
+
+namespace CompanyTestProject.Application.DTOs.Product
 {
     public class UpdateProductRequestDto : BaseDto
     {
-        public ProductDto ProductDto { get; set; }
+        public ProductDtoBase ProductDto { get; set; }
     }
 }

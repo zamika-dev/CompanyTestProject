@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using CompanyTestProject.Application.DTOs.Product;
 using CompanyTestProject.Application.Repositories;
 using CompanyTestProject.Application.Validator;
 using MediatR;
@@ -19,7 +18,7 @@ namespace CompanyTestProject.Application.Features.Product.Commands.Create
         public async Task<int> Handle(CreateProductCommand request, CancellationToken cancellationToken)
         {
             var validator = new CreateProductDtoValidator(_ProductRepository);
-            var validationResult = await validator.ValidateAsync(request.ProductRequestDto);
+            var validationResult = await validator.ValidateAsync(request.ProductDto);
             if (!validationResult.IsValid)
             {
                 string errorMessageList = "";
@@ -29,7 +28,8 @@ namespace CompanyTestProject.Application.Features.Product.Commands.Create
                 throw new Exception(errorMessageList);
             }
 
-            var product = _Mapper.Map<Domain.Product>(request.ProductRequestDto);            product = await _ProductRepository.Add(product);
+            var product = _Mapper.Map<Domain.Product>(request.ProductDto);            
+            product = await _ProductRepository.Add(product);
             if (product == null)
                 throw new Exception("Product wasn't Created");
 

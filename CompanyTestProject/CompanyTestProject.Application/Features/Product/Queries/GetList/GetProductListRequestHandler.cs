@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CompanyTestProject.Application.Features.Product.Queries.GetList
 {
-    public class GetProductListRequestHandler : IRequestHandler<GetProductListRequest, List<ProductResponseDto>>
+    public class GetProductListRequestHandler : IRequestHandler<GetProductListRequest, List<ProductDto>>
     {
         private readonly IProductRepository _ProductRepository;
         private readonly IMapper _Mapper;
@@ -16,10 +16,18 @@ namespace CompanyTestProject.Application.Features.Product.Queries.GetList
             _Mapper = mapper;
         }
 
-        public async Task<List<ProductResponseDto>> Handle(GetProductListRequest request, CancellationToken cancellationToken)
+        public async Task<List<ProductDto>> Handle(GetProductListRequest request, CancellationToken cancellationToken)
         {
-            var productList = await _ProductRepository.GetAll();
-            return _Mapper.Map<List<ProductResponseDto>>(productList);
+            if (request.UserId != null)
+            {
+                var productList = await _ProductRepository.GetByUserId(request.UserId);
+                return _Mapper.Map<List<ProductDto>>(productList);
+            }
+            else
+            {
+                var productList = await _ProductRepository.GetAll();
+                return _Mapper.Map<List<ProductDto>>(productList);
+            }
         }
     }
 }

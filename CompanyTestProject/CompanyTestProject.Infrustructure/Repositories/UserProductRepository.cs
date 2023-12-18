@@ -13,6 +13,13 @@ namespace CompanyTestProject.Infrustructure.Repositories
             _Context = context;
         }
 
+        public async Task Delete(int productId)
+        {
+            var userProduct = _Context.UserProduct.FirstOrDefault(c => c.ProductId == productId);
+            _Context.UserProduct.Remove(userProduct);
+            await _Context.SaveChangesAsync();
+        }
+
         public async Task<List<UserProduct>> GetUserProductList(string userId)
         {
             return await _Context.UserProduct.Include(r => r.Product).Where(c => c.UserId == userId).ToListAsync();

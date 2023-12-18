@@ -4,7 +4,7 @@ using FluentValidation;
 
 namespace CompanyTestProject.Application.Validator
 {
-    public class CreateProductDtoValidator : AbstractValidator<CreateProductRequestDto>
+    public class CreateProductDtoValidator : AbstractValidator<ProductDtoBase>
     {
         private readonly IProductRepository _ProductRepository;
 
@@ -12,14 +12,14 @@ namespace CompanyTestProject.Application.Validator
         {
             _ProductRepository = productRepository;
 
-            RuleFor(c => c.ProductDto.Name)
+            RuleFor(c => c.Name)
                 .NotNull()
                 .NotEmpty()
                 .WithMessage("{PropertyName} is required")
                 .MaximumLength(100)
                 .WithMessage("{PropertyName} must not exceed 100 characters");
 
-            RuleFor(c => c.ProductDto.ManufactureEmail)
+            RuleFor(c => c.ManufactureEmail)
                 .NotNull()
                 .NotEmpty()
                 .WithMessage("{PropertyName} is required")
@@ -32,7 +32,7 @@ namespace CompanyTestProject.Application.Validator
                     return await _ProductRepository.IsManufatureEmailUniqe(email);
                 }).WithMessage("This {PropertyName} already exist");
 
-            RuleFor(c => c.ProductDto.ProduceDate)
+            RuleFor(c => c.ProduceDate)
                 .NotNull()
                 .NotEmpty()
                 .WithMessage("{PropertyName} is required")
@@ -45,7 +45,7 @@ namespace CompanyTestProject.Application.Validator
                     return await _ProductRepository.IsProduceDateUniqe(date.Value);
                 }).WithMessage("This {PropertyName} already exist");
 
-            RuleFor(c => c.ProductDto.ManufacturePhone)
+            RuleFor(c => c.ManufacturePhone)
                 .NotNull()
                 .NotEmpty()
                 .WithMessage("{PropertyName} is required")

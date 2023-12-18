@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CompanyTestProject.Application.DTOs.Product
+﻿namespace CompanyTestProject.Application.DTOs.Product
 {
-    public class CreateProductRequestDto
+    public class CreateProductRequestDto : ProductDtoBase
     {
-        public ProductDto ProductDto { get; set; }
     }
 }

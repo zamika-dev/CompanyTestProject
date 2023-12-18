@@ -1,9 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace CompanyTestProject.Application.DTOs.Product
 {
-    public class ProductDto : BaseDto
+    public class ProductDtoBase
     {
         public required string Name { get; set; }
 

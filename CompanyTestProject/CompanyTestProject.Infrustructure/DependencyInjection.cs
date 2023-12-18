@@ -16,24 +16,6 @@ namespace CompanyTestProject.Infrustructure
     {
         public static IServiceCollection AddInfrustructure(this IServiceCollection services, IConfiguration configuration)
         {
-            var constr = configuration.GetConnectionString("connstr");
-            services.AddDbContext<CompanyTestProjectDbContext>(options => options.UseSqlServer(constr));
-            services.AddIdentity<Domain.User, IdentityRole>(c =>
-            {
-                c.Password.RequiredLength = 4;
-                c.Password.RequiredUniqueChars = 2;
-                c.Password.RequireNonAlphanumeric = false;
-                c.Password.RequireUppercase = false;
-                c.Password.RequireDigit = false;
-                c.User.RequireUniqueEmail = true;
-                c.User.AllowedUserNameCharacters = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM";
-            }).AddEntityFrameworkStores<CompanyTestProjectDbContext>();
-
-            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-            services.AddScoped<IProductRepository, ProductRepository>();
-            services.AddScoped<IUserProductRepository, UserProductRepository>();
-            services.AddScoped<IAuthenticationService, AuthenticationService>();
-
             //Jwt and Identity Settings
             services.Configure<JwtSettings>(configuration.GetSection("JwtSettings"));
 
@@ -55,6 +37,27 @@ namespace CompanyTestProject.Infrustructure
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtSettings:Key"]))
                 };
             });
+
+            //connection settings
+            var constr = configuration.GetConnectionString("connstr");
+            services.AddDbContext<CompanyTestProjectDbContext>(options => options.UseSqlServer(constr));
+
+            //identity settings
+            services.AddIdentity<Domain.User, IdentityRole>(c =>
+            {
+                c.Password.RequiredLength = 4;
+                c.Password.RequiredUniqueChars = 2;
+                c.Password.RequireNonAlphanumeric = false;
+                c.Password.RequireUppercase = false;
+                c.Password.RequireDigit = false;
+                c.User.RequireUniqueEmail = true;
+                c.User.AllowedUserNameCharacters = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM";
+            }).AddEntityFrameworkStores<CompanyTestProjectDbContext>();
+
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IUserProductRepository, UserProductRepository>();
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
 
             return services;
         }

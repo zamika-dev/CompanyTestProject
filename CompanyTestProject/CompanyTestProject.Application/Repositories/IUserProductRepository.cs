@@ -5,5 +5,7 @@ namespace CompanyTestProject.Application.Repositories
     public interface IUserProductRepository : IGenericRepository<UserProduct>
     {
         Task<List<UserProduct>> GetUserProductList(string userId);
+
+        Task Delete(int productId);
     }
 }

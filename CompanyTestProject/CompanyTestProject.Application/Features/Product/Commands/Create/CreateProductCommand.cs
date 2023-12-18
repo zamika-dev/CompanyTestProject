@@ -5,6 +5,6 @@ namespace CompanyTestProject.Application.Features.Product.Commands.Create
 {
     public class CreateProductCommand : IRequest<int>
     {
-        public CreateProductRequestDto ProductRequestDto { get; set; } = null!;
+        public ProductDtoBase ProductDto { get; set; } = null!;
     }
 }

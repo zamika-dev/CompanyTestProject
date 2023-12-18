@@ -18,6 +18,14 @@ namespace CompanyTestProject.Infrustructure.Repositories
             _Context = context;
         }
 
+        public async Task<List<Product>> GetByUserId(string userId)
+        {
+            return await(from p in _Context.Products
+                         join u in _Context.UserProduct on p.Id equals u.ProductId
+                         where u.UserId == userId
+                         select p).ToListAsync();
+        }
+
         public async Task<bool> IsManufatureEmailUniqe(string email)
         {
             var result = await _Context.Products.AnyAsync(c => c.ManufactureEmail == email);
