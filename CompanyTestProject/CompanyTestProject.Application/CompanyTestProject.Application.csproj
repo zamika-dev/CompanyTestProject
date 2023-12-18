@@ -16,4 +16,8 @@
     <ProjectReference Include="..\CompanyTestProject.Domain\CompanyTestProject.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\UserProduct\Command\" />
+  </ItemGroup>
+
 </Project>

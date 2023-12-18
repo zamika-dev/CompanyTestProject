@@ -1,6 +1,6 @@
 ﻿namespace CompanyTestProject.Application.DTOs
 {
-    internal class UserProductDto : BaseDto
+    public class UserProductDto : BaseDto
     {
         public required string UserId { get; set; }
 
