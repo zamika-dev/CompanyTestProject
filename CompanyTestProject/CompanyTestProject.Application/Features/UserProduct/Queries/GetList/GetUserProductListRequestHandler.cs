@@ -21,7 +21,7 @@ namespace CompanyTestProject.Application.Features.UserProduct.Queries.GetList
             _Mapper = mapper;
         }
 
-        public Task<List<UserProductDto>> Handle(GetUserProductListRequest request, CancellationToken cancellationToken)
+        public async Task<List<UserProductDto>> Handle(GetUserProductListRequest request, CancellationToken cancellationToken)
         {
             var userProductList = await _UserProductRepository.GetUserProductList(request.UserId);
             if (userProductList == null)
